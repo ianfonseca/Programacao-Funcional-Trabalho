@@ -43,8 +43,26 @@ button{
 button:hover{
     background-color: #ae4c3ccf ;
 }
-ul{
-    margin-top: 15px;
-    justify-content: center;
-    color: #495867;
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    border: 1px solid #ae4c3ccf;
+    border-radius: 5px;
 }
+
+li {
+    color: #495867;
+    font-size: 18px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
