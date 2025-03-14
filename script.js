@@ -1,11 +1,11 @@
 let tarefas = [];
 let proximoId = 1;
 
-function criarTarefa(nome, descricao) {
+function criarTarefa(nome, data) {
     const novaTarefa = {
         id: proximoId++,
         nome,
-        descricao,
+        data,
         concluida: false
     };
     tarefas = [...tarefas, novaTarefa];
@@ -13,46 +13,50 @@ function criarTarefa(nome, descricao) {
 }
 
 function atualizarTarefa(id) {
-    tarefas = tarefas.map(tarefa =>
-        tarefa.id === id ? { ...tarefa, concluida: true } : tarefa
-    ); 
+    tarefas = tarefas = tarefas.map(tarefa =>
+        tarefa.id === id ? {
+            ...tarefa, concluida: true
+        } : tarefa);
     atualizarListaDeTarefas();
 }
 
 function excluirTarefa(id) {
-    tarefas = tarefas.filter(tarefa => tarefa.id !== id); 
+    tarefas = tarefas.filter(tarefa => tarefa.id !== id);
     atualizarListaDeTarefas();
 }
 
-function obterTarefasPendentes() {
-    return tarefas.filter(tarefa => !tarefa.concluida);
-}
-
 function atualizarListaDeTarefas() {
-    const listElement = document.getElementById('lista');
+    const listElement = document.getElementById('listaTarefas');
     listElement.innerHTML = '';
 
     tarefas.forEach(tarefa => {
-        const tarefaElement = document.createElement('div');
+        const tarefaElement = document.createElement('li');
         tarefaElement.classList.add('tarefa-item');
         tarefaElement.innerHTML = `
-            <span>${tarefa.id}. ${tarefa.nome} (${tarefa.concluida ? 'Concluída' : 'Pendente'})</span>
-            <button onclick="atualizarTarefa(${tarefa.id})">Marcar como Concluída</button>
-            <button onclick="excluirTarefa(${tarefa.id})">Excluir</button>
-        `;
+        <span>${tarefa.id}. ${tarefa.nome} (${tarefa.data}) (${tarefa.concluida ? 'Concluída' : 'Pendente'})</span>
+        <button onclick="atualizarTarefa(${tarefa.id})">Concluir</button>
+        <button onclick="excluirTarefa(${tarefa.id})">Excluir</button>`;
+        
         listElement.appendChild(tarefaElement);
     });
 }
-
 function adicionarTarefa() {
-    const nomeTarefa = document.getElementById('nome-tarefa').value;
-    const descricaoTarefa = document.getElementById('descricao-tarefa').value;
+    const nomeTarefa = document.getElementById('novaTarefa').value;
+    const dataTarefa = document.getElementById('dataTarefa').value;
 
-    if (nomeTarefa && descricaoTarefa) {
-        criarTarefa(nomeTarefa, descricaoTarefa);
-        document.getElementById('nome-tarefa').value = '';
-        document.getElementById('descricao-tarefa').value = '';
+    if (nomeTarefa) {
+        criarTarefa(nomeTarefa,dataTarefa);
+        document.getElementById('novaTarefa').value = '';
+        document.getElementById('dataTarefa').value = '';
     } else {
-        alert("Preencha os campos obrigatórios antes de adicionar uma nova tarefa");
+        alert("Preencha o campo de tarefa antes de adicionar.");
     }
 }
+
+const dataAtual = new Date()
+
+flatpickr("#dataTarefa", {
+    enableTime: true,
+    dateFormat: "d/m/Y H:i",
+    minDate: dataAtual
+});
