@@ -33,7 +33,7 @@ function atualizarListaDeTarefas() {
         const tarefaElement = document.createElement('li');
         tarefaElement.classList.add('tarefa-item');
         tarefaElement.innerHTML = `
-        <span>${tarefa.id}. ${tarefa.nome} (${tarefa.data}) (${tarefa.concluida ? 'Concluída' : 'Pendente'})</span>
+        <span>${tarefa.id}. ${tarefa.nome} (${tarefa.data}) (${tarefa.concluida ? 'Concluida' : 'Pendente'})</span>
         <button onclick="atualizarTarefa(${tarefa.id})">Concluir</button>
         <button onclick="excluirTarefa(${tarefa.id})">Excluir</button>`;
         
@@ -60,3 +60,5 @@ flatpickr("#dataTarefa", {
     dateFormat: "d/m/Y H:i",
     minDate: dataAtual
 });
+
+document.addEventListener("DOMContentLoaded", carregarTarefas);
